@@ -1,0 +1,58 @@
+[
+  {
+    "id": "cerro-toco-normal",
+    "name": "Cerro Toco",
+    "country": "Chile",
+    "region": "Atacama / Antofagasta",
+    "route": "Normal Route from ALMA Road",
+    "max_elevation_m": 5604,
+    "elevation_gain_m": 350,
+    "difficulty_uiaa": "F",
+    "estimated_hours": 3.5,
+    "gpx_path": "routes/chile/atacama-antofagasta/cerro-toco-normal.gpx",
+    "trailhead_access": "4WD or High-Clearance to ~5,250m",
+    "guide_url": "https://vulcanoexpediciones.com/en/expeditions/cerro-toco-ascent"
+  },
+  {
+    "id": "volcan-lascar-crater",
+    "name": "Volcán Láscar",
+    "country": "Chile",
+    "region": "Atacama / Antofagasta",
+    "route": "Crater Rim & True Summit",
+    "max_elevation_m": 5592,
+    "elevation_gain_m": 650,
+    "difficulty_uiaa": "F+",
+    "estimated_hours": 4.5,
+    "gpx_path": "routes/chile/atacama-antofagasta/volcan-lascar-crater.gpx",
+    "trailhead_access": "4WD Low-Range recommended (Lejía Lagoon road)",
+    "guide_url": "https://vulcanoexpediciones.com/en/expeditions/lascar-volcano-ascent"
+  },
+  {
+    "id": "volcan-licancabur-normal",
+    "name": "Volcán Licancabur",
+    "country": "Chile",
+    "region": "Atacama / Antofagasta",
+    "route": "Normal Route from Laguna Verde Bivouac",
+    "max_elevation_m": 5920,
+    "elevation_gain_m": 1320,
+    "difficulty_uiaa": "PD",
+    "estimated_hours": 8.0,
+    "gpx_path": "routes/chile/atacama-antofagasta/volcan-licancabur-normal.gpx",
+    "trailhead_access": "4WD required to base camp",
+    "guide_url": "https://vulcanoexpediciones.com/en/expeditions/licancabur-volcano-ascent"
+  },
+  {
+    "id": "ojos-del-salado-chile-normal",
+    "name": "Nevado Ojos del Salado",
+    "country": "Chile",
+    "region": "Copiapó / Atacama",
+    "route": "Chilean Normal Route via Refugio Tejos",
+    "max_elevation_m": 6893,
+    "elevation_gain_m": 1093,
+    "difficulty_uiaa": "AD-",
+    "estimated_hours": 11.0,
+    "gpx_path": "routes/chile/copiapo-puna/ojos-del-salado-chile-normal.gpx",
+    "trailhead_access": "4WD Low-Range to Refugio Atacama (5,260m) and Tejos (5,837m)",
+    "guide_url": "https://vulcanoexpediciones.com/en/expeditions/ojos-del-salado-volcano-ascent"
+  }
+]
