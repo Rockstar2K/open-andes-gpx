@@ -9,7 +9,7 @@
 
 **Community-driven, open-access repository of curated and cleaned GPX tracks, approach routes, high camps, and waypoints for mountaineering across the Andes.**
 
-[Explore Routes](#routes-directory) • [How to Contribute](CONTRIBUTING.md) • [Route Index (JSON)](routes/index.json) • [Outdoor Calculators](https://vulcanoexpediciones.com/en/outdoor-calculators)
+[Available Routes](#available-routes) • [How to Contribute](CONTRIBUTING.md) • [Route Index (JSON)](routes/index.json) • [Field Tools](https://vulcanoexpediciones.com/en/outdoor-calculators)
 
 </div>
 
@@ -21,8 +21,8 @@ High-altitude navigation in the Andes presents unique challenges: trackless scre
 
 **Open Andes GPX** provides:
 - **Cleaned GPX tracks** (no jitter, no false loops, accurate elevation profiles).
-- **Critical waypoints** (trailheads, 4WD roadheads, water sources, high camps, crater rims, true summits).
-- **Technical metadata** (elevation gain, maximum altitude, technical difficulty grade, seasonal conditions).
+- **Critical waypoints** (trailheads, 4WD roadheads, base camps, crater rims, true summits).
+- **Technical metadata** (elevation gain, maximum altitude, technical difficulty grade, vehicle access requirements).
 - **Machine-readable catalog** (`routes/index.json`) for open-source developers, GIS researchers, and navigation apps.
 
 ---
@@ -35,53 +35,55 @@ open-andes-gpx/
 ├── CONTRIBUTING.md
 ├── LICENSE
 └── routes/
-    ├── index.json                  # Complete machine-readable route registry
-    ├── chile/
-    │   ├── atacama-antofagasta/   # Licancabur, Láscar, Cerro Toco, Sairecabur, Pular...
-    │   ├── copiapo-puna/          # Ojos del Salado, Tres Cruces, Incahuasi...
-    │   └── central-andes/         # Cerro El Plomo, Marmolejo, San José...
-    ├── argentina/
-    │   ├── mendoza/               # Aconcagua, Cerro Mercedario...
-    │   └── puna-catamarca/        # Monte Pissis, Bonete Chico, Walter Penck...
-    ├── bolivia/
-    │   ├── cordillera-real/       # Huayna Potosí, Illimani, Pequeño Alpamayo...
-    │   └── altiplano/             # Nevado Sajama, Acotango...
-    └── peru/
-        ├── cordillera-blanca/     # Huascarán, Alpamayo, Pisco...
-        └── arequipa-cusco/        # Chachani, Misti, Ausangate...
+    ├── index.json                  # Machine-readable route registry
+    └── chile/
+        └── atacama-antofagasta/    # Curated GPX tracks & waypoints
+            ├── cerro-toco-normal.gpx
+            ├── volcan-lascar-crater.gpx
+            └── volcan-licancabur-normal.gpx
 ```
+
+> **Note:** Directory templates for additional regions across Chile (Puna de Atacama, Central Andes), Argentina, Bolivia, and Peru are planned as part of the project roadmap. See [Contributing](CONTRIBUTING.md) to submit new routes.
 
 ---
 
-## Routes Directory
+## Available Routes
 
-### 🇨🇱 Northern Chile & Atacama Desert (Antofagasta / Calama / San Pedro)
+Currently available, field-verified routes in Northern Chile / Atacama:
 
-| Summit / Route | Max Elev. | Elevation Gain (D+) | Difficulty | GPX File | Route Topo & Guide |
-|---|---|---|---|---|---|
-| **Cerro Toco** (Normal Route) | 5,604 m | +350 m | F (Easy / Scree) | [`cerro-toco-normal.gpx`](routes/chile/atacama-antofagasta/cerro-toco-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/cerro-toco-ascent) |
-| **Volcán Láscar** (Crater Rim) | 5,592 m | +650 m | F (Active Volcano) | [`volcan-lascar-crater.gpx`](routes/chile/atacama-antofagasta/volcan-lascar-crater.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/lascar-volcano-ascent) |
-| **Volcán Licancabur** (Normal) | 5,920 m | +1,320 m | PD (Steep Scree) | [`volcan-licancabur-normal.gpx`](routes/chile/atacama-antofagasta/volcan-licancabur-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/licancabur-volcano-ascent) |
-| **Cerro Sairecabur** (Mine Route) | 5,971 m | +550 m | PD- (High Exposure) | [`cerro-sairecabur-normal.gpx`](routes/chile/atacama-antofagasta/cerro-sairecabur-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/sairecabur-volcano-ascent) |
-| **Cerro Jorquencal** (Acclimatization) | 4,990 m | +420 m | F (Trekking) | [`cerro-jorquencal-normal.gpx`](routes/chile/atacama-antofagasta/cerro-jorquencal-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/cerro-jorquencal-ascent) |
-| **Cerro Corona** (Puna Ridge) | 5,291 m | +620 m | F (Desert Trek) | [`cerro-corona-normal.gpx`](routes/chile/atacama-antofagasta/cerro-corona-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/cerro-corona-ascent) |
-| **Volcán Putana** (Fumaroles) | 5,890 m | +890 m | F+ (Sulfur scree) | [`volcan-putana-normal.gpx`](routes/chile/atacama-antofagasta/volcan-putana-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/putana-volcano-ascent) |
-| **Volcán San Pedro** (Twin Crater) | 6,145 m | +1,450 m | PD (Sand & Scree) | [`volcan-san-pedro-normal.gpx`](routes/chile/atacama-antofagasta/volcan-san-pedro-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/san-pedro-volcano-ascent) |
-| **Cerro Pular** (Remote Ridge) | 6,233 m | +1,600 m | PD (4WD Remote) | [`cerro-pular-normal.gpx`](routes/chile/atacama-antofagasta/cerro-pular-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/cerro-pular-ascent) |
+| Summit / Route | Max Elev. | Elevation Gain (D+) | Difficulty | Key Waypoints Included | GPX Track | Route Guide |
+|---|---|---|---|---|---|---|
+| **Cerro Toco**<br>*(Normal Route from ALMA Road)* | 5,604 m | +370 m | F (Easy / Scree) | • Trailhead / 4WD Parking (5,235 m)<br>• True Summit (5,604 m) | [`cerro-toco-normal.gpx`](routes/chile/atacama-antofagasta/cerro-toco-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/cerro-toco-ascent) |
+| **Volcán Láscar**<br>*(Crater Rim & True Summit)* | 5,592 m | +650 m | F+ (Active Volcano) | • Trailhead / 4WD Parking (4,916 m)<br>• Active Crater Rim (5,500 m)<br>• True Summit (5,592 m) | [`volcan-lascar-crater.gpx`](routes/chile/atacama-antofagasta/volcan-lascar-crater.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/lascar-volcano-ascent) |
+| **Volcán Licancabur**<br>*(Normal Route from Base Camp)* | 5,916 m | +1,320 m | PD (Steep Scree) | • Base Camp Trailhead (4,615 m)<br>• Summit & Crater Lake (5,916 m) | [`volcan-licancabur-normal.gpx`](routes/chile/atacama-antofagasta/volcan-licancabur-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/licancabur-volcano-ascent) |
 
-### 🇨🇱 Puna de Atacama & Copiapó (The 6,000m Giants)
+### Route Details & Access Summary
 
-| Summit / Route | Max Elev. | Elevation Gain (D+) | Difficulty | GPX File | Route Topo & Guide |
-|---|---|---|---|---|---|
-| **Nevado Ojos del Salado** (Chilean Normal) | 6,893 m | +1,093 m (from Tejos) | AD- (Grade II Rock) | [`ojos-del-salado-chile-normal.gpx`](routes/chile/copiapo-puna/ojos-del-salado-chile-normal.gpx) | [Guide](https://vulcanoexpediciones.com/en/expeditions/ojos-del-salado-volcano-ascent) |
-| **Nevado Tres Cruces Sur** | 6,749 m | +1,350 m | PD+ (Steep Snow/Scree) | [`tres-cruces-sur-normal.gpx`](routes/chile/copiapo-puna/tres-cruces-sur-normal.gpx) | [Guide](https://vulcanoexpediciones.com) |
+- **Cerro Toco (5,604 m):**
+  - **Location:** San Pedro de Atacama / Chajnantor Plateau, Chile.
+  - **Access:** 4WD or high-clearance vehicle via Paso Jama international highway and ALMA observatory auxiliary road to parking at 5,235 m.
+  - **Overview:** Ideal acclimatization peak and introduction to 5,000m+ terrain. Moderate scree slope with panoramic views of the ALMA array and Bolivian border.
+- **Volcán Láscar (5,592 m):**
+  - **Location:** San Pedro de Atacama / Talabre, Chile.
+  - **Access:** 4WD required (low range recommended) via Talabre village and Laguna Lejía dirt track to trailhead at 4,916 m.
+  - **Overview:** Ascent to the crater rim of the most active volcano in Northern Chile, passing sulfur fumaroles, and continuing to the true summit.
+- **Volcán Licancabur (5,916 m):**
+  - **Location:** Chile–Bolivia border (ascended via Laguna Blanca / Hito Cajón side).
+  - **Access:** 4WD required to base camp at 4,615 m.
+  - **Overview:** Sustained steep volcanic scree with over 1,300m elevation gain, reaching the ancient Inca ruins and crater lagoon at 5,916 m.
 
-### 🇨🇱 Central Andes (Santiago / Valparaíso)
+---
 
-| Summit / Route | Max Elev. | Elevation Gain (D+) | Difficulty | GPX File | Route Topo & Guide |
-|---|---|---|---|---|---|
-| **Cerro El Plomo** (Normal from Valle Nevado) | 5,424 m | +2,400 m | F+ (Glacier Crossing) | [`cerro-el-plomo-normal.gpx`](routes/chile/central-andes/cerro-el-plomo-normal.gpx) | [Guide](https://vulcanoexpediciones.com) |
-| **Cerro Marmolejo** (Normal Route) | 6,108 m | +2,850 m | PD- (Glacier Trek) | [`cerro-marmolejo-normal.gpx`](routes/chile/central-andes/cerro-marmolejo-normal.gpx) | [Guide](https://vulcanoexpediciones.com) |
+### 🗺️ Upcoming Routes (Roadmap)
+
+We are actively curating and preparing tracks for additional peaks across the Andes. Contributions from certified guides and experienced mountaineers are welcome!
+
+- **Chile (Puna & Central Andes):** Nevado Ojos del Salado (6,893 m), Nevado Tres Cruces (6,749 m), Cerro Sairecabur (5,971 m), Volcán San Pedro (6,145 m), Cerro El Plomo (5,424 m), Cerro Marmolejo (6,108 m).
+- **Argentina:** Aconcagua (6,961 m), Monte Pissis (6,795 m), Cerro Mercedario (6,720 m).
+- **Bolivia:** Nevado Sajama (6,542 m), Huayna Potosí (6,088 m), Illimani (6,438 m).
+- **Peru:** Huascarán (6,768 m), Nevado Pisco (5,752 m), Nevado Chachani (6,057 m).
+
+Have a cleaned track for one of these? Check out our [Contributing Guidelines](CONTRIBUTING.md) to submit a PR!
 
 ---
 
@@ -118,3 +120,4 @@ Please read our [Contributing Guidelines](CONTRIBUTING.md) to check our track qu
 All tracks and geographical datasets in this repository are published under the **[Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/)**.
 
 Curated and maintained with ❤️ by the guiding team at **[Vulcano Expediciones](https://vulcanoexpediciones.com)** — Specialist High-Altitude Guiding & Logistics in Northern Chile & the Andes.
+

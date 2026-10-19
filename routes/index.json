@@ -33,26 +33,12 @@
     "country": "Chile",
     "region": "Atacama / Antofagasta",
     "route": "Normal Route from Laguna Verde Bivouac",
-    "max_elevation_m": 5920,
+    "max_elevation_m": 5916,
     "elevation_gain_m": 1320,
     "difficulty_uiaa": "PD",
     "estimated_hours": 8.0,
     "gpx_path": "routes/chile/atacama-antofagasta/volcan-licancabur-normal.gpx",
     "trailhead_access": "4WD required to base camp",
     "guide_url": "https://vulcanoexpediciones.com/en/expeditions/licancabur-volcano-ascent"
-  },
-  {
-    "id": "ojos-del-salado-chile-normal",
-    "name": "Nevado Ojos del Salado",
-    "country": "Chile",
-    "region": "Copiapó / Atacama",
-    "route": "Chilean Normal Route via Refugio Tejos",
-    "max_elevation_m": 6893,
-    "elevation_gain_m": 1093,
-    "difficulty_uiaa": "AD-",
-    "estimated_hours": 11.0,
-    "gpx_path": "routes/chile/copiapo-puna/ojos-del-salado-chile-normal.gpx",
-    "trailhead_access": "4WD Low-Range to Refugio Atacama (5,260m) and Tejos (5,837m)",
-    "guide_url": "https://vulcanoexpediciones.com/en/expeditions/ojos-del-salado-volcano-ascent"
   }
 ]
