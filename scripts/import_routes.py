@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download Wikiexplora's all-routes KMZ and split its tracks into GPX files."""
+"""Import track lines from the public route bundle into the Open Andes catalog."""
 
 import argparse
 import html
@@ -215,7 +215,7 @@ def main():
         stack.pop()
 
     INDEX.write_text(json.dumps(existing, ensure_ascii=False, indent=2) + "\n")
-    print(f"Imported {created} tracks into routes/wikiexplora/ (KMZ snapshot source: {args.source})")
+    print(f"Imported {created} tracks into the raw route catalog (KMZ source: {args.source})")
 
 
 if __name__ == "__main__":
