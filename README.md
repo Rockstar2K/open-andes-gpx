@@ -36,14 +36,16 @@ open-andes-gpx/
 ├── LICENSE
 └── routes/
     ├── index.json                  # Machine-readable route registry
-    └── chile/
-        └── atacama-antofagasta/    # Curated GPX tracks & waypoints
-            ├── cerro-toco-normal.gpx
-            ├── volcan-lascar-crater.gpx
-            └── volcan-licancabur-normal.gpx
+    ├── chile/
+    │   └── atacama-antofagasta/    # Curated GPX tracks & waypoints
+    │       ├── cerro-toco-normal.gpx
+    │       ├── volcan-lascar-crater.gpx
+    │       └── volcan-licancabur-normal.gpx
+    └── wikiexplora/
+        └── [country]/[region]/     # Raw, attributed source-track imports
 ```
 
-> **Note:** Directory templates for additional regions across Chile (Puna de Atacama, Central Andes), Argentina, Bolivia, and Peru are planned as part of the project roadmap. See [Contributing](CONTRIBUTING.md) to submit new routes.
+Curated, field-verified routes and raw Wikiexplora imports are kept in separate directories. The latter are source material and have not been reviewed to Open Andes track-quality standards.
 
 ---
 
@@ -98,19 +100,50 @@ To plan your expedition using these files, explore our free open-access mountain
 
 ## Importing Wikiexplora GPX Routes
 
-Run the importer with no arguments to download Wikiexplora's all-routes KMZ, convert Andean outdoor tracks into GPX, and add them to `routes/index.json`. It skips non-Andean, urban, and cycling routes:
+[Wikiexplora’s all-routes page](https://www.wikiexplora.com/Todas_las_rutas_de_Wikiexplora_en_Google_Earth) publishes a KMZ bundle for Google Earth. The importer downloads that bundle and converts its route lines into individual GPX files. It uses only Python’s standard library; no package installation or Wikiexplora login is needed.
+
+### Run the importer
+
+From the repository root, run:
 
 ```sh
 python3 scripts/import_wikiexplora.py
 ```
 
-To import from a KMZ already on disk, pass its path instead. Files are organized under `routes/wikiexplora/` by country and region; existing paths are retained rather than overwritten. Each GPX links back to Open Andes and retains its Wikiexplora source link. These source tracks are raw imports, not field-verified Open Andes routes; review before relying on them.
+To use a KMZ file you already downloaded, pass its path:
+
+```sh
+python3 scripts/import_wikiexplora.py /path/to/Wikiexplora.kmz
+```
+
+### What gets imported
+
+- Tracks in Chile, Argentina, Bolivia, Peru, Colombia, and Ecuador.
+- Hiking, trekking, mountaineering, and other non-cycling outdoor route tracks represented by KML `LineString` geometry.
+- One GPX file for each track item, with multiple line segments retained as separate GPX track segments and elevation retained where present in the KMZ coordinates.
+- Route and region names from the KMZ folders. Filenames are lowercase, hyphen-separated slugs.
+
+Urban routes and cycling or mountain-bike tracks are skipped. Tracks from other countries are skipped. Standalone waypoint placemarks, route descriptions, timestamps, and other KML annotations are not converted.
+
+### Files and metadata
+
+Imported files go under `routes/wikiexplora/[country]/[region]/`. Each file contains the track name and links to both its Wikiexplora route page and the Open Andes repository. The matching `routes/index.json` entry includes the route name, country, region, GPX path, `source_url`, and `project_url`.
+
+The importer preserves existing files rather than overwriting them. Re-running it adds routes with new paths and skips paths already in the index. It also ensures existing Wikiexplora GPX files have the Open Andes project link. It does not refresh coordinates for an already imported route if Wikiexplora changes that route under the same name; compare and review updates separately.
+
+### Review before use
+
+Wikiexplora tracks are raw imports, not field-verified Open Andes routes. Check the route page and GPX before navigation, especially for access, current conditions, and track accuracy. Attribution links are retained; verify the source license terms before republishing the imported data.
 
 ---
 
 ## Compatibility
 
-All GPX files in this repository conform to the **GPX 1.1 schema** (`WGS84` datum) and are verified compatible with:
+GPX files in this repository use **GPX 1.1** and WGS84 coordinates. Compatibility can vary by device or app, so open a file in your intended navigation tool before relying on it in the field.
+
+The Wikiexplora importer writes GPX 1.1 track files. It does not convert standalone waypoint placemarks or validate route accuracy.
+
+Commonly used with:
 - **Handheld GPS Devices:** Garmin (eTrex, GPSMAP, Montana, inReach), Coros, Suunto.
 - **Mobile Navigation Apps:** [Gaia GPS](https://www.gaiagps.com/), [OsmAnd](https://osmand.net/), [Organic Maps](https://organicmaps.app/), [OruxMaps](https://www.oruxmaps.com/), [Wikiloc](https://www.wikiloc.com/).
 - **GIS Software:** QGIS, Google Earth Pro, CalTopo / SARtopo.
