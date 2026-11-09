@@ -96,6 +96,16 @@ To plan your expedition using these files, explore our free open-access mountain
 * **[Naismith & Tobler High-Altitude Hiking Time](https://vulcanoexpediciones.com/en/outdoor-calculators/hiking-time-naismith)** — Estimate real hiking times taking into account elevation gain and hypoxia delays.
 * **[Atmospheric Pressure & Oxygen Calculator](https://vulcanoexpediciones.com/en/outdoor-calculators/altitude-to-oxygen)** — Effective oxygen fraction and barometric decay up to 7,000m.
 
+## Importing Wikiexplora GPX Routes
+
+Run the importer with no arguments to download Wikiexplora's all-routes KMZ, convert Andean outdoor tracks into GPX, and add them to `routes/index.json`. It skips non-Andean, urban, and cycling routes:
+
+```sh
+python3 scripts/import_wikiexplora.py
+```
+
+To import from a KMZ already on disk, pass its path instead. Files are organized under `routes/wikiexplora/` by country and region; existing paths are retained rather than overwritten. Each GPX links back to Open Andes and retains its Wikiexplora source link. These source tracks are raw imports, not field-verified Open Andes routes; review before relying on them.
+
 ---
 
 ## Compatibility
