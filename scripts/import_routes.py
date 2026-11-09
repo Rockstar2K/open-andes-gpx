@@ -179,7 +179,7 @@ def main():
                 track_name = track_name or "Wikiexplora route"
                 country_dir = slug(country) if country else "other"
                 region_dir = slug(region) if region else "unsorted"
-                base = Path("routes") / "wikiexplora" / country_dir / region_dir / f"{slug(track_name)}.gpx"
+                base = Path("routes") / "imported" / country_dir / region_dir / f"{slug(track_name)}.gpx"
                 relative = base
                 suffix = 2
                 while True:
