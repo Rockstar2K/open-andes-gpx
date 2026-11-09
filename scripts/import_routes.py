@@ -18,11 +18,21 @@ INDEX = ROOT / "routes" / "index.json"
 KMZ_URL = "https://www.wikiexplora.com/Wikiexplora.kmz"
 SOURCE_PAGE = "https://www.wikiexplora.com/Todas_las_rutas_de_Wikiexplora_en_Google_Earth"
 PROJECT_URL = "https://github.com/Rockstar2K/open-andes-gpx"
+README = ROOT / "README.md"
 KML = "http://www.opengis.net/kml/2.2"
 GPX = "http://www.topografix.com/GPX/1/1"
 COUNTRIES = {"CHILE": "Chile", "ARGENTINA": "Argentina", "BOLIVIA": "Bolivia",
              "PERÚ": "Perú", "COLOMBIA": "Colombia", "ECUADOR": "Ecuador"}
 EXCLUDED = ("wikiexplora urbano", "mountain bike", "bicicleta", "ciclismo", "ciclista")
+PLACEHOLDER_STEM = re.compile(r"\d+(?:-\d+)?$")
+GENERIC_WORDS = {
+    "acercamiento", "alternativa", "ascenso", "atajo", "auto", "camino", "circuito", "descenso",
+    "dia", "final", "inicio", "parte", "path", "route", "ruta", "sendero", "track", "tramo",
+    "travesia", "trek", "untitled", "variante", "vehicular",
+}
+FILLER_WORDS = {"a", "al", "completa", "completo", "corta", "corto", "de", "del", "desde", "el",
+                "en", "la", "las", "largo", "larga", "los", "normal", "opcional", "por", "sin", "via",
+                "vehicular", "y"}
 
 
 def slug(value):
@@ -130,13 +140,124 @@ def gpx_bytes(name, segments, source_url):
     return ET.tostring(root, encoding="utf-8", xml_declaration=True)
 
 
+def route_title(source_url):
+    title = urllib.parse.unquote(urllib.parse.urlparse(source_url).path.rsplit("/", 1)[-1])
+    return re.sub(r"\s+", " ", title.replace("_", " ")).strip()
+
+
+def words(value):
+    normalized = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode().lower()
+    return set(re.findall(r"[a-z]+|\d+", normalized))
+
+
+def is_generic_label(name, title):
+    name_words = words(name)
+    if not name_words or not (name_words & GENERIC_WORDS):
+        return False
+    specific_words = name_words - GENERIC_WORDS - FILLER_WORDS - {word for word in name_words if word.isdigit()}
+    return not (specific_words & words(title))
+
+
+def set_route_name(path, name):
+    tree = ET.parse(path)
+    root = tree.getroot()
+    metadata = root.find(f"{{{GPX}}}metadata")
+    if metadata is None:
+        metadata = ET.Element(f"{{{GPX}}}metadata")
+        root.insert(0, metadata)
+    metadata_name = metadata.find(f"{{{GPX}}}name")
+    if metadata_name is None:
+        metadata_name = ET.SubElement(metadata, f"{{{GPX}}}name")
+    metadata_name.text = name
+    for track in root.findall(f"{{{GPX}}}trk"):
+        track_name = track.find(f"{{{GPX}}}name")
+        if track_name is None:
+            track_name = ET.SubElement(track, f"{{{GPX}}}name")
+        track_name.text = name
+    ET.register_namespace("", GPX)
+    tree.write(path, encoding="utf-8", xml_declaration=True)
+
+
+def apply_route_renames(existing, renames):
+    targets = set()
+    prepared = []
+    for item, target, name in renames:
+        relative = Path(item["gpx_path"])
+        if target in targets or (ROOT / target).exists():
+            raise FileExistsError(f"Rename target already exists: {target}")
+        targets.add(target)
+        prepared.append((item, relative, target, name))
+
+    readme = README.read_text()
+    for item, relative, target, name in prepared:
+        source = ROOT / relative
+        destination = ROOT / target
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        source.rename(destination)
+        set_route_name(destination, name)
+        item["id"] = slug(f"{item['country']}-{item['region']}-{target.stem}")
+        item["name"] = name
+        item["route"] = name
+        item["gpx_path"] = target.as_posix()
+        pattern = rf"\[[^\]]*\]\({re.escape(relative.as_posix())}\)"
+        readme, replaced = re.subn(pattern, f"[{name}]({target.as_posix()})", readme)
+        if replaced != 1:
+            raise ValueError(f"Expected one README link for {relative}, found {replaced}")
+    INDEX.write_text(json.dumps(existing, ensure_ascii=False, indent=2) + "\n")
+    README.write_text(readme)
+    return len(prepared)
+
+
+def rename_placeholder_routes(existing):
+    renames = []
+    for item in existing:
+        relative = Path(item["gpx_path"])
+        stem = relative.stem
+        if not PLACEHOLDER_STEM.fullmatch(stem):
+            continue
+        title = route_title(item.get("source_url", ""))
+        if not title:
+            raise ValueError(f"No route title for {relative}")
+        name = f"{title} — Track {stem}"
+        target = relative.with_name(f"{slug(title)}-track-{stem}.gpx")
+        renames.append((item, target, name))
+    return apply_route_renames(existing, renames)
+
+
+def rename_generic_routes(existing):
+    renames = []
+    for item in existing:
+        title = route_title(item.get("source_url", ""))
+        if not title or not is_generic_label(item["name"], title):
+            continue
+        relative = Path(item["gpx_path"])
+        name = f"{title} — {item['name']}"
+        target = relative.with_name(f"{slug(title)}-{relative.name}")
+        renames.append((item, target, name))
+    return apply_route_renames(existing, renames)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", nargs="?", default=KMZ_URL, help="KMZ URL or a downloaded .kmz file")
+    parser.add_argument("--rename-placeholders", action="store_true",
+                        help="replace numeric imported track names with descriptive source-route names")
+    parser.add_argument("--rename-generic", action="store_true",
+                        help="prefix context-free track labels with their source-route name")
     args = parser.parse_args()
 
-    source_url = args.source if args.source.startswith(("http://", "https://")) else KMZ_URL
     existing = json.loads(INDEX.read_text())
+    if args.rename_placeholders:
+        renamed = rename_placeholder_routes(existing)
+        print(f"Renamed {renamed} placeholder tracks")
+        return
+    if args.rename_generic:
+        renamed = rename_generic_routes(existing)
+        print(f"Renamed {renamed} context-free tracks")
+        return
+
+    source_url = args.source if args.source.startswith(("http://", "https://")) else KMZ_URL
     for item in existing:
         if item.get("source") == "Wikiexplora":
             item["project_url"] = PROJECT_URL
